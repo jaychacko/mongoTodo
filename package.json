@@ -1,0 +1,7 @@
+{
+  "name": "",
+  "version": "",
+  "dependencies": {
+    "mongodb": "^2.2.5"
+  }
+}
