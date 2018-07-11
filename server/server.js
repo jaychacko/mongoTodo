@@ -16,6 +16,8 @@ var {
 
 var app = express();
 
+const Port = process.env.PORT ||5000;
+
 app.use(bodyParser.json())
 
 app.post('/todos', (req, res) => {
@@ -63,8 +65,8 @@ app.get('/todos/:id', (req, res) => {
     }
 })
 
-app.listen(5000, () => {
-    console.log('Port opened at 5000')
+app.listen(Port, () => {
+    console.log(`Port opened at ${Port}`)
 })
 
 module.exports = {
