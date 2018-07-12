@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 
 app.post('/todos', (req, res) => {
 
-    console.log("post got hit", req.body)
+    console.log("post got hit", req.body.text)
     var todo = new Todo({
         text: req.body.text
     })
@@ -72,3 +72,5 @@ app.listen(Port, () => {
 module.exports = {
     app
 }
+
+//https://fast-ocean-19014.herokuapp.com/todoslo
