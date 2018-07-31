@@ -54,11 +54,10 @@ userSchema.methods.generateAuthToken = function () {
         access
     }, 'abc123').toString();
 
-    user.tokens.push({
+    user.tokens = user.tokens.concat({
         access,
         token
     });
-
 
 
     return user.save().then(() => {
@@ -113,6 +112,20 @@ userSchema.statics.findByCredentials = function (email, password) {
 
         })
     })
+}
+
+userSchema.methods.removeToken = function (token) {
+    var user = this;
+
+    return user.update({
+        $pull:{
+            tokens:{
+                //token:token
+                token
+            }
+        }
+    })
+
 }
 
 userSchema.pre('save', function (next) {
