@@ -27,11 +27,11 @@ const Port = process.env.PORT || 5000;
 
 app.use(bodyParser.json())
 
-app.post('/todos', (req, res) => {
+app.post('/todos',authenticate, (req, res) => {
 
-    console.log("post got hit", req.body.text)
     var todo = new Todo({
-        text: req.body.text
+        text: req.body.text,
+        _creator:req.user._id
     })
 
     todo.save().then((doc) => {
@@ -43,17 +43,16 @@ app.post('/todos', (req, res) => {
     })
 })
 
-app.get('/todos', (req, res) => {
-    Todo.find().then((todos) => {
-        res.send({
-            todos
-        })
-        console.log("mongo ask Succeded", todos)
+
+app.get('/todos',authenticate, (req, res) => {
+    Todo.find({_creator:req.user._id}).then((todos) => {
+        res.send({todos})
     }, (e) => {
         console.log("mongo ask failed", e)
         res.status(400).send(e);
     })
 })
+
 app.get('/todos/:id', (req, res) => {
     // var id =JSON.stringify(req.params);
     var id = req.params.id;
